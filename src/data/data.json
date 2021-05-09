@@ -1,0 +1,232 @@
+{
+  "codeBlocks": [
+    [
+      [
+        "param a",
+        "param b",
+        "j <-- +, #2, a",
+        "c <-- -, #1, j",
+        "j <-- -, #1, j",
+        "ifTrue #flag goto L4"
+      ],
+      [
+        "L1: a <-- +, 1, c",
+        "b <-- +, 1, a",
+        "ifTrue #flag goto L3"
+      ],
+      [
+        "L2: a <-- +, a, b",
+        "ifTrue #flag goto L2"
+      ],
+      [
+        "L3: a <-- +, a, b",
+        "b <-- -, 1, a",
+        "ifTrue #flag goto L1"
+      ],
+      [
+        "L4: a <-- +, a, c",
+        "b <-- +, a, b"
+      ]
+    ],
+    [
+      [
+        "param a_0",
+        "param b_0",
+        "j <-- +, #2, a_0",
+        "c_0 <-- -, #1, j",
+        "j <-- -, #1, j",
+        "ifTrue #flag goto L4"
+      ],
+      [
+        "L1: a_1 <-- phi(a_0, a_6)",
+        "b_1 <-- phi(b_0, b_3)",
+        "a_2 <-- +, 1, c_0",
+        "b_2 <-- +, 1, a_2",
+        "ifTrue #flag goto L3"
+      ],
+      [
+        "L2: a_3 <-- phi(a_2, a_4)",
+        "a_4 <-- +, a_3, b_2",
+        "ifTrue #flag goto L2"
+      ],
+      [
+        "L3: a_5 <-- phi(a_2, a_4)",
+        "a_6 <-- +, a_5, b_2",
+        "b_3 <-- -, 1, a_6",
+        "ifTrue #flag goto L1"
+      ],
+      [
+        "L4: a_7 <-- phi(a_0, a_6)",
+        "b_4 <-- phi(b_0, b_3)",
+        "a_8 <-- +, a_7, c_0",
+        "b_5 <-- +, a_8, b_4"
+      ]
+    ]
+  ],
+  "nodeSection": [
+    {
+      "code": [
+        [
+          "Entry-block:",
+          "def_Entry : {}"
+        ],
+        [
+          [
+            "def_A : {}",
+            "param a",
+            "\tGlobals : {a}",
+            "param b",
+            "\tGlobals : {a, b}",
+            "j <-- +, #2, a",
+            "\tGlobals : {a, b}",
+            "\tdef_A : {j}",
+            "\tBlocks(j) : {A}",
+            "c <-- -, #1, j",
+            "\tdef_A : {c, j}",
+            "\tBlocks(c) : {A}",
+            "j <-- -, #1, j",
+            "\tdef_A : {c, j}",
+            "\tBlocks(j) : {A}",
+            "ifTrue #flag goto L4"
+          ],
+          [
+            "def_B : {}",
+            "L1: a <-- +, 1, c",
+            "\tGlobals : {a, b, c}",
+            "\tdef_B : {a}",
+            "\tBlocks(a) : {B}",
+            "b <-- +, 1, a",
+            "\tdef_B : {a, b}",
+            "\tBlocks(b) : {B}",
+            "ifTrue #flag goto L3"
+          ],
+          [
+            "def_C : {}",
+            "L2: a <-- +, a, b",
+            "\tGlobals : {a, b, c}",
+            "\tGlobals : {a, b, c}",
+            "\tdef_C : {a}",
+            "\tBlocks(a) : {B, C}",
+            "ifTrue #flag goto L2"
+          ],
+          [
+            "def_D : {}",
+            "L3: a <-- +, a, b",
+            "\tGlobals : {a, b, c}",
+            "\tGlobals : {a, b, c}",
+            "\tdef_D : {a}",
+            "\tBlocks(a) : {B, C, D}",
+            "b <-- -, 1, a",
+            "\tdef_D : {a, b}",
+            "\tBlocks(b) : {B, D}",
+            "ifTrue #flag goto L1"
+          ],
+          [
+            "def_E : {}",
+            "L4: a <-- +, a, c",
+            "\tGlobals : {a, b, c}",
+            "\tGlobals : {a, b, c}",
+            "\tdef_E : {a}",
+            "\tBlocks(a) : {B, C, D, E}",
+            "b <-- +, a, b",
+            "\tGlobals : {a, b, c}",
+            "\tdef_E : {a, b}",
+            "\tBlocks(b) : {B, D, E}"
+          ]
+        ],
+        [
+          "Exit-block:",
+          "def_Exit : {}"
+        ]
+      ],
+      "table": {
+        "node =": [
+          "Pred(node)",
+          "Dom(node)",
+          "Idom(node)",
+          "DF(node)"
+        ],
+        "Entry": [
+          "None",
+          "Entry",
+          "None",
+          "None"
+        ],
+        "A": [
+          "Entry",
+          "Entry, A",
+          "Entry",
+          "None"
+        ],
+        "B": [
+          "A, H",
+          "Entry, A, B",
+          "A",
+          "B"
+        ],
+        "C": [
+          "B",
+          "Entry, A, B, C",
+          "B",
+          "H"
+        ],
+        "D": [
+          "B",
+          "Entry, A, B, D",
+          "B",
+          "H"
+        ],
+        "E": [
+          "D",
+          "Entry, A, B, D, E",
+          "D",
+          "G"
+        ],
+        "F": [
+          "D",
+          "Entry, A, B, D, F",
+          "D",
+          "G"
+        ],
+        "G": [
+          "E, F",
+          "Entry, A, B, D, G",
+          "D",
+          "H"
+        ],
+        "H": [
+          "C, G",
+          "Entry, A, B, H",
+          "B",
+          "B"
+        ],
+        "Exit": [
+          "H",
+          "Entry, A, B, H, Exit",
+          "H",
+          "None"
+        ]
+      }
+    }
+  ],
+  "varSection": [
+    {
+      "code": [
+
+      ],
+      "table": {
+
+      }
+    }
+  ],
+  "phiSection": [
+    {
+      "code": [
+
+      ],
+      "table": {
+        
+      }
+    }
+  ]
+}
